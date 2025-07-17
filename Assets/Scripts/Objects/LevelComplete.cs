@@ -24,6 +24,7 @@ public class LevelComplete : MonoBehaviour
     public GameObject brainVitaScorepanel;
     public GameObject henoiScorepanel;
     public GameObject slideTheBlockScorepanel;
+    public GameObject tangramScorePanel;
 
     [Header("success  panel Objects ")]
     public GameObject successpanel;
@@ -39,6 +40,8 @@ public class LevelComplete : MonoBehaviour
     public GameObject blockLevelsPanel;
     public GameObject henoiLevelsPanel;
     public GameObject brainvitaLevelsPanel;
+    public GameObject mainTangramPanel;
+    public GameObject tangramLevelsPanel;
 
 
     private void OnEnable()
@@ -47,11 +50,17 @@ public class LevelComplete : MonoBehaviour
         leveldata.BlockLevelSuccesEvent += BlockLevelSuccess;
         leveldata.HenoiLevelSuccesEvent += HenoiLevelSuccess;
         leveldata.BraivitaLevelSuccesEvent += BrainvitaSuccess;
+        leveldata.TangramLevelSuccesEvent += TangramSuccess;
 
         uidata.AllLevelsCompleteEvent += ShowAllLevelsCompletePanel;
         uidata.HomeButtonClickedEvent += HomeBtnClicked;
 
 
+    }
+
+    private void TangramSuccess(int obj)
+    {
+        StartCoroutine(WaitAndShow());
     }
 
     private void OnDisable()
@@ -60,6 +69,7 @@ public class LevelComplete : MonoBehaviour
         leveldata.BlockLevelSuccesEvent -= BlockLevelSuccess;
         leveldata.HenoiLevelSuccesEvent -= HenoiLevelSuccess;
         leveldata.BraivitaLevelSuccesEvent -= BrainvitaSuccess;
+        leveldata.TangramLevelSuccesEvent -= TangramSuccess;
 
         uidata.AllLevelsCompleteEvent -= ShowAllLevelsCompletePanel;
         uidata.HomeButtonClickedEvent -= HomeBtnClicked;
@@ -124,6 +134,7 @@ public class LevelComplete : MonoBehaviour
         brainVitaScorepanel.SetActive(false);
         henoiScorepanel.SetActive(false);
         slideTheBlockScorepanel.SetActive(false);
+        tangramScorePanel.SetActive(false);
 
         successpanel.SetActive(false);
         pausepanel.SetActive(false);
@@ -143,5 +154,7 @@ public class LevelComplete : MonoBehaviour
         blockLevelsPanel.SetActive(false);
         henoiLevelsPanel.SetActive(false);
         brainvitaLevelsPanel.SetActive(false);
+        mainTangramPanel.SetActive(false);
+        tangramLevelsPanel.SetActive(false);
     }
 }

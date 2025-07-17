@@ -3,6 +3,7 @@ using Oculus.Platform.Models;
 using Oculus.Platform;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PurchaseManager : MonoBehaviour
 {
@@ -14,7 +15,13 @@ public class PurchaseManager : MonoBehaviour
         playerData.BuySlideTheBlockLevelsEvent += BuySlideTheBlockLevels;
         playerData.BuyBrainVitaLevelsEvent += BuyBrainVitaLevels;
         playerData.BuyMatchStickLevelsEvent += BuyMatchStickLevels;
+        playerData.BuyTangramLevelsEvent += BuyTangramLevels;
 
+    }
+
+    private void BuyTangramLevels()
+    {
+        IAP.LaunchCheckoutFlow("TangramLevels").OnComplete(LaunchTangramFlowCallback);
     }
 
     private void OnDisable()
@@ -22,6 +29,7 @@ public class PurchaseManager : MonoBehaviour
         playerData.BuySlideTheBlockLevelsEvent -= BuySlideTheBlockLevels;
         playerData.BuyBrainVitaLevelsEvent -= BuyBrainVitaLevels;
         playerData.BuyMatchStickLevelsEvent -= BuyMatchStickLevels;
+        playerData.BuyTangramLevelsEvent -= BuyTangramLevels;
 
     }
 
@@ -58,6 +66,18 @@ public class PurchaseManager : MonoBehaviour
         Debug.Log("purchased " + p.Sku);
         playerData.SlideTheBlockPurchaseSuccess();
        
+    }
+
+    private void LaunchTangramFlowCallback(Message<Purchase> msg)
+    {
+        if (msg.IsError)
+        {
+            Debug.Log(" Something wrong ");
+            return;
+        }
+        Purchase p = msg.GetPurchase();
+        Debug.Log("purchased " + p.Sku);
+        playerData.TangramPurchaseSuccess();
     }
 
     private void LaunchMatchStickFlowCallback(Message<Purchase> msg)

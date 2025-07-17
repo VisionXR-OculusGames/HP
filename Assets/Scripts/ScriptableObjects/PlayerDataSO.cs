@@ -17,6 +17,7 @@ namespace com.VisionXR.Models
         public bool isBrainVitaLevelsUnlocked = false;
         public bool isSlideTheBlockLevelsUnlocked = false;
         public bool isMatchSticksLevelsUnlocked = false;
+        public bool isTangramLevelsUnlocked = false; // New variable for Tangram levels
 
 
         [Header("  Levels Lock Data")]
@@ -35,6 +36,10 @@ namespace com.VisionXR.Models
         public int matchStickPaidLevelspack3Unlocked = 1;
 
 
+        public int tangramFreeLevelsUnlocked = 1;
+        public int tangramPaidLevelsUnlocked = 1;
+
+
         //Actions
 
         public Action<Sprite> PlayerImageChangedEvent;
@@ -45,11 +50,13 @@ namespace com.VisionXR.Models
         public Action BuyBrainVitaLevelsEvent;
         public Action BuySlideTheBlockLevelsEvent;
         public Action BuyMatchStickLevelsEvent;
+        public Action BuyTangramLevelsEvent;
 
 
         public Action UnlockBrainVitaLevelsEvent;
         public Action UnlockSlideTheBlockLevelsEvent;
         public Action UnlockMatchStickLevelsEvent;
+        public Action UnlockTangramLevelsEvent;
 
 
 
@@ -60,6 +67,7 @@ namespace com.VisionXR.Models
             isBrainVitaLevelsUnlocked = false;
             isSlideTheBlockLevelsUnlocked = false;
             isMatchSticksLevelsUnlocked = false;
+            isTangramLevelsUnlocked = false; // Initialize Tangram levels as locked
 
             LoadLevelsData();
         }
@@ -95,6 +103,11 @@ namespace com.VisionXR.Models
             BuyMatchStickLevelsEvent?.Invoke();
         }
 
+        public void BuyTangramLevels()
+        {
+            BuyTangramLevelsEvent?.Invoke();
+        }
+
 
         public void BrainVitaPurchaseSuccess()
         {
@@ -112,6 +125,12 @@ namespace com.VisionXR.Models
         {
             isMatchSticksLevelsUnlocked = true;
             UnlockMatchStickLevelsEvent?.Invoke();
+        }
+
+        public void TangramPurchaseSuccess()
+        {
+            isTangramLevelsUnlocked = true; // Set Tangram levels as unlocked
+            UnlockTangramLevelsEvent?.Invoke();
         }
 
         public void SaveLevelsData()
@@ -132,6 +151,9 @@ namespace com.VisionXR.Models
 
             data.slideTheBlockPaidLevelsPack3Unlocked = slideTheBlockPaidLevelsPack3Unlocked;
             data.matchStickPaidLevelsPack3Unlocked = matchStickPaidLevelspack3Unlocked;
+
+            data.tangramFreeLevelsUnlocked = tangramFreeLevelsUnlocked;
+            data.tangramPaidLevelsUnlocked = tangramPaidLevelsUnlocked;
 
             PlayerPrefs.SetString(key, JsonUtility.ToJson(data));
             PlayerPrefs.Save();
@@ -154,6 +176,9 @@ namespace com.VisionXR.Models
 
                 matchStickFreeLevelsUnlocked = data.matchStickFreeLevelsUnlocked;
                 matchStickPaidLevelsUnlocked = data.matchStickPaidLevelsUnlocked;
+
+                tangramFreeLevelsUnlocked = data.tangramFreeLevelsUnlocked;
+                tangramPaidLevelsUnlocked = data.tangramPaidLevelsUnlocked;
 
                 // Handle default for new field in case it's still 0
                 slideTheBlockPaidLevelsPack3Unlocked =
@@ -189,6 +214,10 @@ namespace com.VisionXR.Models
         // New Variables
         public int slideTheBlockPaidLevelsPack3Unlocked = 1;
         public int matchStickPaidLevelsPack3Unlocked = 1;
+
+        // New Variables for Tangram
+        public int tangramFreeLevelsUnlocked = 1;
+        public int tangramPaidLevelsUnlocked = 1;
     }
 
  

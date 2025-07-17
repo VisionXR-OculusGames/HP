@@ -12,6 +12,7 @@ namespace com.VisionXR.Models
         public int BlockLevelNo;
         public int HenoiLevelNo;
         public int BrainVitaLevelNo;
+        public int TangramLevelNo;
 
         // moves
         [Header(" Hints")]
@@ -34,6 +35,10 @@ namespace com.VisionXR.Models
         public Action BrainvitaLevelSetEvent;
         public Action<int> BraivitaLevelSuccesEvent;
 
+
+        public Action TangramLevelSetEvent;
+        public Action<int> TangramLevelSuccesEvent;
+
         public Action<int> LoadNextLevelEvent;
 
         // Score and Moves
@@ -44,7 +49,7 @@ namespace com.VisionXR.Models
         public Action<int> SetMinMarblesEvent;
 
         public Action<int, int,string> SetMatchStickMovesEvent;
-
+        public Action<int, int> SetTangramMovesEvent;
         // Methods
 
         private void OnEnable()
@@ -52,6 +57,8 @@ namespace com.VisionXR.Models
             MatchStickLevelNo = 0;
             BlockLevelNo = 0;
             HenoiLevelNo = 0;
+            BrainVitaLevelNo = 0;
+            TangramLevelNo = 0;
             NoOfHints = 3;
 
         }
@@ -95,6 +102,15 @@ namespace com.VisionXR.Models
             HenoiLevelSuccesEvent?.Invoke(MatchStickLevelNo);
         }
 
+        public void SetTangramLevel(int level)
+        {
+            TangramLevelNo = level;
+            TangramLevelSetEvent?.Invoke();
+        }
+        public void TangramLevelSuccess()
+        {
+            TangramLevelSuccesEvent?.Invoke(TangramLevelNo);
+        }
         public void SetMoves(int moves)
         {
             SetMovesEvent?.Invoke(moves);
@@ -129,6 +145,12 @@ namespace com.VisionXR.Models
         {
             LoadNextLevelEvent?.Invoke(levelNo);
         }
+
+        public void SetTangramMoves(int currentMove, int totalMoves)
+        {
+            SetTangramMovesEvent?.Invoke(currentMove, totalMoves);
+        }
+
     }
 }
 

@@ -24,8 +24,9 @@ public class SuccessPanelView : MonoBehaviour
     public GameObject brainVitaPanel;
     public GameObject henoiPanel;
     public GameObject slideTheBlockPanel;
+    public GameObject tangramSuccessPanel;
 
-  
+
 
     public void NextBtnClicked()
     {
@@ -57,6 +58,11 @@ public class SuccessPanelView : MonoBehaviour
             brainVitaPanel.SetActive(true);
             levelData.LoadNextLevel(levelData.BrainVitaLevelNo + 1);         
         }
+        else if (uiData.currentGame == Games.Tangram)
+        {
+            tangramSuccessPanel.SetActive(true);
+            levelData.LoadNextLevel(levelData.TangramLevelNo + 1);
+        }
 
     }
 
@@ -86,6 +92,11 @@ public class SuccessPanelView : MonoBehaviour
         {
             brainVitaPanel.SetActive(true);
             levelData.LoadNextLevel(levelData.BrainVitaLevelNo - 1);          
+        }
+        else if (uiData.currentGame == Games.Tangram)
+        {
+            tangramSuccessPanel.SetActive(true);
+            levelData.LoadNextLevel(levelData.TangramLevelNo - 1);
         }
 
 
@@ -117,5 +128,7 @@ public class SuccessPanelView : MonoBehaviour
         brainVitaPanel.SetActive(false);
         henoiPanel.SetActive(false);
         slideTheBlockPanel.SetActive(false);
+
+        tangramSuccessPanel.SetActive(false);
     }
 }

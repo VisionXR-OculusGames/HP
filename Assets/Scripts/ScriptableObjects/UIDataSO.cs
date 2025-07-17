@@ -12,7 +12,8 @@ namespace com.VisionXR.Models
         public MatchSticklevelsType currentMatchStickLevelsType;
         public SlideTheBlocklevelsType currentBlocksLevelsType;
         public BrainVitalevelsType currentBrainVitalevelsType;
-  
+        public TangramlevelsType currentTangramLevelsType;
+
 
         // Actions
         public Action GameChangedEvent;
@@ -21,6 +22,7 @@ namespace com.VisionXR.Models
         public Action<int> HenoiLevelChangedEvent;
         public Action<int> StartBrainVitaEvent;
         public Action<int> BrainVitaLevelChangedEvent;
+        public Action<int> TangramLevelChangedEvent;
         public Action HomeButtonClickedEvent;
         public Action ExitGameEvent;
         public Action AllLevelsCompleteEvent;
@@ -50,6 +52,10 @@ namespace com.VisionXR.Models
             BlockLevelChangedEvent?.Invoke(levelNo);
         }
 
+        public void TangramLevelChanged(int levelNo)
+        {
+            TangramLevelChangedEvent?.Invoke(levelNo);
+        }
         public void HenoiLevelChanged(int levelNo)
         {
             HenoiLevelChangedEvent?.Invoke(levelNo);

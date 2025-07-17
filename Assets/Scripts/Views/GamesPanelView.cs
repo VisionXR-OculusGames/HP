@@ -13,6 +13,7 @@ public class GamesPanelView : MonoBehaviour
     public GameObject brainVitaLevelspanel;
     public GameObject henoiLevelspanel;
     public GameObject slideTheBlockLevelsPanel;
+    public GameObject tangramLevelsPanel;
 
     public void MatchStickGameClicked()
     {
@@ -47,6 +48,15 @@ public class GamesPanelView : MonoBehaviour
         ResetPanels();
         uiData.SetGame(Games.SlideTheBlock);
         slideTheBlockLevelsPanel.SetActive(true);
+        gameObject.SetActive(false);
+    }
+
+    public void TangramClicked()
+    {
+        audioData.PlayButtonClickSound();
+        ResetPanels();
+        uiData.SetGame(Games.Tangram);
+        tangramLevelsPanel.SetActive(true);
         gameObject.SetActive(false);
     }
 

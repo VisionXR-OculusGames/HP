@@ -13,6 +13,7 @@ namespace com.VisionXR.ModelClasses
         public string matchStickId;
         public string brainvitaId;
         public string slideTheBlockId;
+        public string tangramId;
 
         // Action
         public Action GetTop10EntriesEvent;
@@ -58,6 +59,18 @@ namespace com.VisionXR.ModelClasses
             {
                 Leaderboards.WriteEntry(brainvitaId, points);
 
+            }
+            catch (Exception e)
+            {
+                Debug.Log(" Some error " + e.Message);
+            }
+        }
+
+        public void WriteToTangram(int points)
+        {
+            try
+            {
+                Leaderboards.WriteEntry(tangramId, points);
             }
             catch (Exception e)
             {
