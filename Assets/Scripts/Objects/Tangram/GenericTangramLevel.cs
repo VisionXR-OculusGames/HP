@@ -46,9 +46,15 @@ public class GenericTangramLevel : MonoBehaviour
         inputData.PinchContinueEvent += ContinuePinch;
 
         triggerBox = GetComponent<BoxCollider>();
+        Initialize();
+
+    }
+
+    private void Initialize()
+    {
         currentMoves = 0;
         moves = 0;
-        levelData.SetMovesAndTotalMoves(moves, totalMoves);
+        levelData.SetTangramMoves(moves, totalMoves);
         levelData.SetLevel(levelNo);
         InitializeInitialSlotMap();
     }
