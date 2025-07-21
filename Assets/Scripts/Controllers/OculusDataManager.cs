@@ -17,7 +17,7 @@ namespace com.visionXR.Controllers
         private ulong _userId = 0;
         private bool isEntitlementVerified = false;
 
-        private void Start()
+        public void BeginLogin()
         {
             if (!UnityEngine.Application.isEditor)
             {

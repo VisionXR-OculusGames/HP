@@ -25,6 +25,7 @@ public class LeaderboardPanel : MonoBehaviour
     public GameObject MatchStickImage;
     public GameObject SlideTheBlockImage;
     public GameObject BrainvitaImage;
+    public GameObject TangramImage;
     private void OnEnable()
     {
         leaderBoardData.ShowLeaderBoardDataEvent += DisplayData;
@@ -90,6 +91,16 @@ public class LeaderboardPanel : MonoBehaviour
         leaderBoardData.GetMyPoints(leaderBoardData.slideTheBlockId);
     }
 
+    public void TangramClicked()
+    {
+        audioData.PlayButtonClickSound();
+        ResetImages();
+        TangramImage.SetActive(true);
+        ResetTexts();
+        leaderBoardData.GetTopTenEntries(leaderBoardData.tangramId);
+        leaderBoardData.GetMyPoints(leaderBoardData.tangramId);
+    }
+
     public void BrainvitaClicked()
     {
         audioData.PlayButtonClickSound();
@@ -103,6 +114,7 @@ public class LeaderboardPanel : MonoBehaviour
         BrainvitaImage.SetActive(false);
         SlideTheBlockImage.SetActive(false);
         MatchStickImage.SetActive(false);
+        TangramImage.SetActive(false);
 
     }
 }

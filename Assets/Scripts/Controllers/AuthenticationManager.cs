@@ -17,6 +17,7 @@ public class AuthenticationManager : MonoBehaviour
     public string brainVitaKey = "BrainVitaData";
     public string matchStickKey = "MatchStickData";
     public string slideTheBlockKey = "SlideTheBlockData";
+    public string tangramKey = "TangramData";
 
     private void OnEnable()
     {
@@ -24,6 +25,7 @@ public class AuthenticationManager : MonoBehaviour
         playerData.UnlockBrainVitaLevelsEvent += BrainvitaPurchaseSuccess;
         playerData.UnlockMatchStickLevelsEvent += MatchStickPurchaseSuccess;
         playerData.UnlockSlideTheBlockLevelsEvent += SlideTheBlockPurchaseSuccess;
+        playerData.UnlockTangramLevelsEvent += TangramPurchaseSuccess;
     }
 
     private void OnDisable()
@@ -32,6 +34,7 @@ public class AuthenticationManager : MonoBehaviour
         playerData.UnlockBrainVitaLevelsEvent -= BrainvitaPurchaseSuccess;
         playerData.UnlockMatchStickLevelsEvent -= MatchStickPurchaseSuccess;
         playerData.UnlockSlideTheBlockLevelsEvent -= SlideTheBlockPurchaseSuccess;
+        playerData.UnlockTangramLevelsEvent -= TangramPurchaseSuccess;
     }
 
     private void BrainvitaPurchaseSuccess()
@@ -50,6 +53,25 @@ public class AuthenticationManager : MonoBehaviour
         SaveSlideTheBlockData();
     }
 
+    private void TangramPurchaseSuccess()
+    {
+        SaveTangramData();
+    }
+
+
+    public async void SaveTangramData()
+    {
+        bool isSuccess = await SaveTangramCloudData();
+        if (isSuccess)
+        {
+
+        }
+        else
+        {
+            await Task.Delay(5000); // wait for 5 seconds before retrying
+            SaveTangramData(); // retry
+        }
+    }
     public async void SaveBrainvitaData()
     {
         bool isSuccess = await SaveBrainvitaCloudData();
@@ -219,19 +241,39 @@ public class AuthenticationManager : MonoBehaviour
         }
     }
 
+    public async Task<bool> SaveTangramCloudData()
+    {
+        TangramData cloudData = new TangramData();
+        cloudData.isTangramLevelsBought = true;
+        try
+        {
+            string jsonData = JsonUtility.ToJson(cloudData);
+            var data = new Dictionary<string, object> { { tangramKey, jsonData } };
+            await CloudSaveService.Instance.Data.Player.SaveAsync(data);
+            Debug.Log(" Data Saved");
+            return true;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Failed to save cloud data: {e.Message}");
+            return false;
+        }
+    }
 
     public async Task LoadAllCloudData()
     {
         Task<SlideTheBlockData> slideTask = LoadSlideTheBlockData();
         Task<MatchStickData> matchTask = LoadMatchStickData();
         Task<BrainVitaData> brainTask = LoadBrainVitaData();
+        Task<TangramData> tangramTask = LoadTangramData();
 
-        await Task.WhenAll(slideTask, matchTask, brainTask);
+        await Task.WhenAll(slideTask, matchTask, brainTask, tangramTask);
 
         // Assign to playerData or use results
         playerData.isSlideTheBlockLevelsUnlocked = slideTask.Result?.isSlideTheBlockLevelsBought ?? false;
         playerData.isMatchSticksLevelsUnlocked = matchTask.Result?.isMatchStickLevelsBought ?? false;
         playerData.isBrainVitaLevelsUnlocked = brainTask.Result?.isBrainvitaLevelsBought ?? false;
+        playerData.isTangramLevelsUnlocked = tangramTask.Result?.isTangramLevelsBought ?? false;
 
         Debug.Log("? All cloud data loaded.");
         //playerData.CloudDataLoaded(); // Raise an event or flag to notify completion
@@ -288,6 +330,23 @@ public class AuthenticationManager : MonoBehaviour
         return null;
     }
 
+    public async Task<TangramData> LoadTangramData()
+    {
+        try
+        {
+            var data = await CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string> { tangramKey });
+            if (data.TryGetValue(tangramKey, out var item))
+            {
+                return JsonUtility.FromJson<TangramData>(item.Value.GetAs<string>());
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Failed to load Tangram data: {e.Message}");
+        }
+        return null;
+    }
+
 
 }
 
@@ -310,6 +369,12 @@ public class BrainVitaData
 {
     public bool isBrainvitaLevelsBought;
 
+}
+
+[Serializable]
+public class TangramData
+{
+    public bool isTangramLevelsBought;
 }
 
 
