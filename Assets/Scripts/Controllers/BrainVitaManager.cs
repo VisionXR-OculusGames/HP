@@ -69,7 +69,9 @@ public class BrainVitaManager : MonoBehaviour
     {
         winPs1.Play();
         winPs2.Play();
+        leaderBoardData.WriteToBrainvita((playerData.brainvitaFreeLevelsUnlocked + playerData.brainvitaPaidLevelsUnlocked) *levelData.GetFinalBrainvitaScore());
         inputData.DeactivateInput();
+
     }
 
     public void ReplayBtnClicked()

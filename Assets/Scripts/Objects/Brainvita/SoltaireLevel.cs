@@ -1,4 +1,4 @@
-using com.VisionXR.Models;
+﻿using com.VisionXR.Models;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -263,6 +263,19 @@ public class SoltaireLevel : MonoBehaviour
             }
         }
 
+        // 🎯 Game complete, calculate remaining marbles
+        int remainingMarbles = 0;
+        foreach (var slot in slots)
+        {
+            if (slot.isOccupied) remainingMarbles++;
+        }
+
+        // 🧮 Calculate final score (Max: 20, decreases by 2 for each extra marble)
+        int finalScore = Mathf.Max(0, 20 - ((remainingMarbles - 1) * 2));
+        levelData.SetFinalBrainvitaScore(finalScore); // Send to leaderboard only
+
+        audioData.PlayLevelCompletedSound();
+        levelData.BrainvitaLevelSuccess(); // Triggers LevelSuccess in BrainVitaManager
         audioData.PlayLevelCompletedSound();
         levelData.BrainvitaLevelSuccess();
 

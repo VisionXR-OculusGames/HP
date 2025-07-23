@@ -1,3 +1,4 @@
+using com.VisionXR.ModelClasses;
 using com.VisionXR.Models;
 using System.Collections;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class HenoiManager : MonoBehaviour
     public LevelDataSO levelData;
     public InputDataSO inputData;
     public UIDataSO uiData;
+    public LeaderBoardSO leaderBoardData;
+    public PlayerDataSO playerData;
 
     [Header("Objects")]
     public GameObject LevelPlacer;
@@ -31,6 +34,7 @@ public class HenoiManager : MonoBehaviour
     {
          winPS1.Play();
          winPS2.Play();
+        leaderBoardData.WriteToTowersOfHenoi((playerData.henoiFreeLevelsUnlocked ) * 10);
         inputData.DeactivateInput();
     }
 

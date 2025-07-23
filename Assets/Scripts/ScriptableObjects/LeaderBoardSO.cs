@@ -14,6 +14,7 @@ namespace com.VisionXR.ModelClasses
         public string brainvitaId;
         public string slideTheBlockId;
         public string tangramId;
+        public string towersOfHenoiId;
 
         // Action
         public Action GetTop10EntriesEvent;
@@ -71,6 +72,18 @@ namespace com.VisionXR.ModelClasses
             try
             {
                 Leaderboards.WriteEntry(tangramId, points);
+            }
+            catch (Exception e)
+            {
+                Debug.Log(" Some error " + e.Message);
+            }
+        }
+
+        public void WriteToTowersOfHenoi(int points)
+        {
+            try
+            {
+                Leaderboards.WriteEntry(towersOfHenoiId, points);
             }
             catch (Exception e)
             {

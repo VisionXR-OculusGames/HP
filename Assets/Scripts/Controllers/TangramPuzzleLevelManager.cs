@@ -76,7 +76,7 @@ public class TangramPuzzleLevelManager : MonoBehaviour
         if (levelPrefab != null)
         {
             currentLevelObject = Instantiate(levelPrefab, Vector3.zero, Quaternion.identity);
-            currentLevelObject.transform.position = LevelPlacer.transform.position + new Vector3(0,0.1f,0);
+            currentLevelObject.transform.position = LevelPlacer.transform.position + new Vector3(0,0.15f,0);
             currentLevelObject.transform.rotation = LevelPlacer.transform.rotation;
             currentLevelObject.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
             currentLevelObject.transform.parent = LevelPlacer.transform;

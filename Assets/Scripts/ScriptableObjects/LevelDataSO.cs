@@ -41,6 +41,8 @@ namespace com.VisionXR.Models
 
         public Action<int> LoadNextLevelEvent;
 
+        public Action<int> SetFinalBrainvitaScoreEvent;
+
         // Score and Moves
         public Action<int> SetMovesEvent;
         public Action<int,int> SetMovesAndTotalMovesEvent;
@@ -51,6 +53,8 @@ namespace com.VisionXR.Models
         public Action<int, int,string> SetMatchStickMovesEvent;
         public Action<int, int> SetTangramMovesEvent;
         // Methods
+
+        private int finalBrainvitaScore;
 
         private void OnEnable()
         {
@@ -149,6 +153,17 @@ namespace com.VisionXR.Models
         public void SetTangramMoves(int currentMove, int totalMoves)
         {
             SetTangramMovesEvent?.Invoke(currentMove, totalMoves);
+        }
+
+        public void SetFinalBrainvitaScore(int score)
+        {
+            finalBrainvitaScore = score;
+            SetFinalBrainvitaScoreEvent?.Invoke(score);
+        }
+
+        public int GetFinalBrainvitaScore()
+        {
+            return finalBrainvitaScore;
         }
 
     }

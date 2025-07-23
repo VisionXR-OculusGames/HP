@@ -26,6 +26,7 @@ public class LeaderboardPanel : MonoBehaviour
     public GameObject SlideTheBlockImage;
     public GameObject BrainvitaImage;
     public GameObject TangramImage;
+    public GameObject TowersOfHenoiImage;
     private void OnEnable()
     {
         leaderBoardData.ShowLeaderBoardDataEvent += DisplayData;
@@ -101,12 +102,24 @@ public class LeaderboardPanel : MonoBehaviour
         leaderBoardData.GetMyPoints(leaderBoardData.tangramId);
     }
 
+    public void TowersOfHenoiClicked()
+    {
+        audioData.PlayButtonClickSound();
+        ResetImages();
+        TowersOfHenoiImage.SetActive(true);
+        ResetTexts();
+        leaderBoardData.GetTopTenEntries(leaderBoardData.towersOfHenoiId);
+        leaderBoardData.GetMyPoints(leaderBoardData.towersOfHenoiId);
+    }
+
     public void BrainvitaClicked()
     {
         audioData.PlayButtonClickSound();
         ResetImages();
         BrainvitaImage.SetActive(true);
+        ResetTexts();
         leaderBoardData.GetTopTenEntries(leaderBoardData.brainvitaId);
+        leaderBoardData.GetMyPoints(leaderBoardData.brainvitaId);
     }
 
     void ResetImages()
@@ -115,6 +128,7 @@ public class LeaderboardPanel : MonoBehaviour
         SlideTheBlockImage.SetActive(false);
         MatchStickImage.SetActive(false);
         TangramImage.SetActive(false);
+        TowersOfHenoiImage.SetActive(false);
 
     }
 }
